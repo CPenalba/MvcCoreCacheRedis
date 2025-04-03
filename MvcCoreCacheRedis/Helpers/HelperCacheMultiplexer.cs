@@ -4,11 +4,15 @@ namespace MvcCoreCacheRedis.Helpers
 {
     public static class HelperCacheMultiplexer
     {
-        private static Lazy<ConnectionMultiplexer>CreateConnection = new Lazy<ConnectionMultiplexer>(() =>
+        private static Lazy<ConnectionMultiplexer> CreateConnection;
+
+        public static void Initialize(string cacheRedisKeys)
         {
-            string cacheRedisKeys = "";
-            return ConnectionMultiplexer.Connect(cacheRedisKeys);
-        });
+            CreateConnection = new Lazy<ConnectionMultiplexer>(() =>
+            {
+                return ConnectionMultiplexer.Connect(cacheRedisKeys);
+            });
+        }
 
         public static ConnectionMultiplexer Connection
         {

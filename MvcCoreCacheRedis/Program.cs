@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddTransient<ServiceCacheRedis>();
 string cacheRedisKeys = builder.Configuration.GetValue<string>("AzureKeys:CacheRedis");
+HelperCacheMultiplexer.Initialize(cacheRedisKeys);
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = cacheRedisKeys;
